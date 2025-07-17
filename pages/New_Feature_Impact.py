@@ -33,48 +33,113 @@ def show_image(img_dir, img_file, caption):
     else:
         st.error(f"Missing image: `{img_path}`")
 
-# === Subject selector ===
-st.markdown("## 📊 Subject-Level Model Performance")
+subject_tab, risk_tab = st.tabs(["Subject Models", "Main Risk Model"])
 
-subject_code = "de"  # Default to Digital Electronics for initial load
+with subject_tab:
+    # === Subject selector ===
+    st.markdown("## 📊 Subject-Level Model Performance")
     
-DE_tab, Math3_tab, FSD_tab, Python_tab = st.tabs(["Digital Electronics (DE)", "Math-3", "Full Stack Development (FSD)", "Python"])
-    
-with DE_tab:
-    st.markdown("### Digital Electronics (DE) Model Performance")
-    subject_code = "de"
-    
-        # === Subject-level visualizations ===
-    subject_base_path = os.path.join("EDA", "SubjectModels", f"{subject_code}_model", "model_performance")
-    
-    subject_images = [
-        ("optimized_ensemble_model_summary.png", "Optimized Ensemble Model Summary"),
-        (f"{subject_code}_shap_summary.png", "SHAP Summary"),
-        (f"{subject_code}_feature_importance.png", "Feature Importances"),
-        (f"{subject_code}_cv_predictions.png", "Cross-Validation Predictions"),
-        (f"{subject_code}_actual_vs_predicted.png", "Actual vs Predicted Marks"),
-        (f"{subject_code}_prediction_errors.png", "Prediction Errors"),
-        (f"{subject_code}_error_distribution.png", "Error Distribution"),
-        ("mae_comparison_by_algorithm.png", "MAE Comparison by Algorithm")
-    ]
-    
-    for file, caption in subject_images:
-        show_image(subject_base_path, file, caption)
-    
-    # === Academic Risk Classification Visuals ===
-    st.markdown("---")
-    st.subheader("📉 Academic Risk Classification Overview")
-    
+    subject_code = "de"  # Default to Digital Electronics for initial load
+        
+    de_tab, math3_tab, fsd_tab, python_tab = st.tabs(["Digital Electronics (DE)", "Math-3", "Full Stack Development (FSD)", "Python"])
+        
+    with de_tab:
+        st.markdown("### Digital Electronics (DE) Model Performance")
+        subject_code = "de"
+        
+            # === Subject-level visualizations ===
+        subject_base_path = os.path.join("EDA", "SubjectModels", f"{subject_code}_model", "model_performance")
+        
+        subject_images = [
+            ("optimized_ensemble_model_summary.png", "Optimized Ensemble Model Summary"),
+            (f"{subject_code}_shap_summary.png", "SHAP Summary"),
+            (f"{subject_code}_feature_importance.png", "Feature Importances"),
+            (f"{subject_code}_cv_predictions.png", "Cross-Validation Predictions"),
+            (f"{subject_code}_actual_vs_predicted.png", "Actual vs Predicted Marks"),
+            (f"{subject_code}_prediction_errors.png", "Prediction Errors"),
+            (f"{subject_code}_error_distribution.png", "Error Distribution"),
+            ("mae_comparison_by_algorithm.png", "MAE Comparison by Algorithm")
+        ]
+        
+        for file, caption in subject_images:
+            show_image(subject_base_path, file, caption)
+        
+    with math3_tab:
+        st.markdown("### Math-3 Model Performance")
+        subject_code = "math3"
+        
+            # === Subject-level visualizations ===
+        subject_base_path = os.path.join("EDA", "SubjectModels", f"{subject_code}_model", "model_performance")
+        
+        subject_images = [
+            ("optimized_ensemble_model_summary.png", "Optimized Ensemble Model Summary"),
+            (f"{subject_code}_shap_summary.png", "SHAP Summary"),
+            (f"{subject_code}_feature_importance.png", "Feature Importances"),
+            (f"{subject_code}_cv_predictions.png", "Cross-Validation Predictions"),
+            (f"{subject_code}_actual_vs_predicted.png", "Actual vs Predicted Marks"),
+            (f"{subject_code}_prediction_errors.png", "Prediction Errors"),
+            (f"{subject_code}_error_distribution.png", "Error Distribution"),
+            ("mae_comparison_by_algorithm.png", "MAE Comparison by Algorithm")
+        ]
+        
+        for file, caption in subject_images:
+            show_image(subject_base_path, file, caption)
+        
+    with fsd_tab:
+        st.markdown("### Full Stack Development (FSD) Model Performance")
+        subject_code = "fsd"
+        
+            # === Subject-level visualizations ===
+        subject_base_path = os.path.join("EDA", "SubjectModels", f"{subject_code}_model", "model_performance")
+        
+        subject_images = [
+            ("optimized_ensemble_model_summary.png", "Optimized Ensemble Model Summary"),
+            (f"{subject_code}_shap_summary.png", "SHAP Summary"),
+            (f"{subject_code}_feature_importance.png", "Feature Importances"),
+            (f"{subject_code}_cv_predictions.png", "Cross-Validation Predictions"),
+            (f"{subject_code}_actual_vs_predicted.png", "Actual vs Predicted Marks"),
+            (f"{subject_code}_prediction_errors.png", "Prediction Errors"),
+            (f"{subject_code}_error_distribution.png", "Error Distribution"),
+            ("mae_comparison_by_algorithm.png", "MAE Comparison by Algorithm")
+        ]
+        
+        for file, caption in subject_images:
+            show_image(subject_base_path, file, caption)
+        
+    with python_tab:
+        st.markdown("### Python Model Performance")
+        subject_code = "python"
+        
+            # === Subject-level visualizations ===
+        subject_base_path = os.path.join("EDA", "SubjectModels", f"{subject_code}_model", "model_performance")
+        
+        subject_images = [
+            ("optimized_ensemble_model_summary.png", "Optimized Ensemble Model Summary"),
+            (f"{subject_code}_shap_summary.png", "SHAP Summary"),
+            (f"{subject_code}_feature_importance.png", "Feature Importances"),
+            (f"{subject_code}_cv_predictions.png", "Cross-Validation Predictions"),
+            (f"{subject_code}_actual_vs_predicted.png", "Actual vs Predicted Marks"),
+            (f"{subject_code}_prediction_errors.png", "Prediction Errors"),
+            (f"{subject_code}_error_distribution.png", "Error Distribution"),
+            ("mae_comparison_by_algorithm.png", "MAE Comparison by Algorithm")
+        ]
+        
+        for file, caption in subject_images:
+            show_image(subject_base_path, file, caption)
+        
+with risk_tab:
+    st.markdown("## 📉 Academic Risk Classification Overview")
+
     st.markdown("""
     Explore key insights from the risk classification pipeline.  
     These visualizations highlight model architecture, performance distribution, and feature impact:
-    
+
     - 🧩 Model Architecture & Summary
     - 📊 Confusion Matrix & Misclassification
     - 📈 Metric Comparisons
     - 🔍 SHAP Feature Contributions
     """)
-    
+
     classification_path = os.path.join("EDA", "main_model", "model_performance")
     classification_figures = [
         ("stacking_risk_model_summary.png", "Stacking Risk Model Summary"),
@@ -83,189 +148,8 @@ with DE_tab:
         ("grouped_metrics_per_model.png", "Model Metrics Comparison"),
         ("shap_comparison_base_models.png", "SHAP Comparison Across Base Models")
     ]
-    
+
     for file, caption in classification_figures:
         show_image(classification_path, file, caption)
 
-with Math3_tab:
-    st.markdown("### Math-3 Model Performance")
-    subject_code = "math3"
-    
-        # === Subject-level visualizations ===
-    subject_base_path = os.path.join("EDA", "SubjectModels", f"{subject_code}_model", "model_performance")
-    
-    subject_images = [
-        ("optimized_ensemble_model_summary.png", "Optimized Ensemble Model Summary"),
-        (f"{subject_code}_shap_summary.png", "SHAP Summary"),
-        (f"{subject_code}_feature_importance.png", "Feature Importances"),
-        (f"{subject_code}_cv_predictions.png", "Cross-Validation Predictions"),
-        (f"{subject_code}_actual_vs_predicted.png", "Actual vs Predicted Marks"),
-        (f"{subject_code}_prediction_errors.png", "Prediction Errors"),
-        (f"{subject_code}_error_distribution.png", "Error Distribution"),
-        ("mae_comparison_by_algorithm.png", "MAE Comparison by Algorithm")
-    ]
-    
-    for file, caption in subject_images:
-        show_image(subject_base_path, file, caption)
-    
-    # === Academic Risk Classification Visuals ===
-    st.markdown("---")
-    st.subheader("📉 Academic Risk Classification Overview")
-    
-    st.markdown("""
-    Explore key insights from the risk classification pipeline.  
-    These visualizations highlight model architecture, performance distribution, and feature impact:
-    
-    - 🧩 Model Architecture & Summary
-    - 📊 Confusion Matrix & Misclassification
-    - 📈 Metric Comparisons
-    - 🔍 SHAP Feature Contributions
-    """)
-    
-    classification_path = os.path.join("EDA", "main_model", "model_performance")
-    classification_figures = [
-        ("stacking_risk_model_summary.png", "Stacking Risk Model Summary"),
-        ("actual_vs_predicted_confusion_matrix.png", "Confusion Matrix"),
-        ("classification_misclass_distribution.png", "Misclassification Distribution"),
-        ("grouped_metrics_per_model.png", "Model Metrics Comparison"),
-        ("shap_comparison_base_models.png", "SHAP Comparison Across Base Models")
-    ]
-    
-    for file, caption in classification_figures:
-        show_image(classification_path, file, caption)
 
-with FSD_tab:
-    st.markdown("### Full Stack Development (FSD) Model Performance")
-    subject_code = "fsd"
-    
-        # === Subject-level visualizations ===
-    subject_base_path = os.path.join("EDA", "SubjectModels", f"{subject_code}_model", "model_performance")
-    
-    subject_images = [
-        ("optimized_ensemble_model_summary.png", "Optimized Ensemble Model Summary"),
-        (f"{subject_code}_shap_summary.png", "SHAP Summary"),
-        (f"{subject_code}_feature_importance.png", "Feature Importances"),
-        (f"{subject_code}_cv_predictions.png", "Cross-Validation Predictions"),
-        (f"{subject_code}_actual_vs_predicted.png", "Actual vs Predicted Marks"),
-        (f"{subject_code}_prediction_errors.png", "Prediction Errors"),
-        (f"{subject_code}_error_distribution.png", "Error Distribution"),
-        ("mae_comparison_by_algorithm.png", "MAE Comparison by Algorithm")
-    ]
-    
-    for file, caption in subject_images:
-        show_image(subject_base_path, file, caption)
-    
-    # === Academic Risk Classification Visuals ===
-    st.markdown("---")
-    st.subheader("📉 Academic Risk Classification Overview")
-    
-    st.markdown("""
-    Explore key insights from the risk classification pipeline.  
-    These visualizations highlight model architecture, performance distribution, and feature impact:
-    
-    - 🧩 Model Architecture & Summary
-    - 📊 Confusion Matrix & Misclassification
-    - 📈 Metric Comparisons
-    - 🔍 SHAP Feature Contributions
-    """)
-    
-    classification_path = os.path.join("EDA", "main_model", "model_performance")
-    classification_figures = [
-        ("stacking_risk_model_summary.png", "Stacking Risk Model Summary"),
-        ("actual_vs_predicted_confusion_matrix.png", "Confusion Matrix"),
-        ("classification_misclass_distribution.png", "Misclassification Distribution"),
-        ("grouped_metrics_per_model.png", "Model Metrics Comparison"),
-        ("shap_comparison_base_models.png", "SHAP Comparison Across Base Models")
-    ]
-    
-    for file, caption in classification_figures:
-        show_image(classification_path, file, caption)
-
-with Python_tab:
-    st.markdown("### Python Model Performance")
-    subject_code = "python"
-    
-        # === Subject-level visualizations ===
-    subject_base_path = os.path.join("EDA", "SubjectModels", f"{subject_code}_model", "model_performance")
-    
-    subject_images = [
-        ("optimized_ensemble_model_summary.png", "Optimized Ensemble Model Summary"),
-        (f"{subject_code}_shap_summary.png", "SHAP Summary"),
-        (f"{subject_code}_feature_importance.png", "Feature Importances"),
-        (f"{subject_code}_cv_predictions.png", "Cross-Validation Predictions"),
-        (f"{subject_code}_actual_vs_predicted.png", "Actual vs Predicted Marks"),
-        (f"{subject_code}_prediction_errors.png", "Prediction Errors"),
-        (f"{subject_code}_error_distribution.png", "Error Distribution"),
-        ("mae_comparison_by_algorithm.png", "MAE Comparison by Algorithm")
-    ]
-    
-    for file, caption in subject_images:
-        show_image(subject_base_path, file, caption)
-    
-    # === Academic Risk Classification Visuals ===
-    st.markdown("---")
-    st.subheader("📉 Academic Risk Classification Overview")
-    
-    st.markdown("""
-    Explore key insights from the risk classification pipeline.  
-    These visualizations highlight model architecture, performance distribution, and feature impact:
-    
-    - 🧩 Model Architecture & Summary
-    - 📊 Confusion Matrix & Misclassification
-    - 📈 Metric Comparisons
-    - 🔍 SHAP Feature Contributions
-    """)
-    
-    classification_path = os.path.join("EDA", "main_model", "model_performance")
-    classification_figures = [
-        ("stacking_risk_model_summary.png", "Stacking Risk Model Summary"),
-        ("actual_vs_predicted_confusion_matrix.png", "Confusion Matrix"),
-        ("classification_misclass_distribution.png", "Misclassification Distribution"),
-        ("grouped_metrics_per_model.png", "Model Metrics Comparison"),
-        ("shap_comparison_base_models.png", "SHAP Comparison Across Base Models")
-    ]
-    
-    for file, caption in classification_figures:
-        show_image(classification_path, file, caption)
-# === Subject-level visualizations ===
-# subject_base_path = os.path.join("EDA", "SubjectModels", f"{subject_code}_model", "model_performance")
-
-# subject_images = [
-#     ("optimized_ensemble_model_summary.png", "Optimized Ensemble Model Summary"),
-#     (f"{subject_code}_shap_summary.png", "SHAP Summary"),
-#     (f"{subject_code}_feature_importance.png", "Feature Importances"),
-#     (f"{subject_code}_cv_predictions.png", "Cross-Validation Predictions"),
-#     (f"{subject_code}_actual_vs_predicted.png", "Actual vs Predicted Marks"),
-#     (f"{subject_code}_prediction_errors.png", "Prediction Errors"),
-#     (f"{subject_code}_error_distribution.png", "Error Distribution"),
-#     ("mae_comparison_by_algorithm.png", "MAE Comparison by Algorithm")
-# ]
-
-# for file, caption in subject_images:
-#     show_image(subject_base_path, file, caption)
-
-# # === Academic Risk Classification Visuals ===
-# st.markdown("---")
-# st.subheader("📉 Academic Risk Classification Overview")
-
-# st.markdown("""
-# Explore key insights from the risk classification pipeline.  
-# These visualizations highlight model architecture, performance distribution, and feature impact:
-
-# - 🧩 Model Architecture & Summary
-# - 📊 Confusion Matrix & Misclassification
-# - 📈 Metric Comparisons
-# - 🔍 SHAP Feature Contributions
-# """)
-
-# classification_path = os.path.join("EDA", "main_model", "model_performance")
-# classification_figures = [
-#     ("stacking_risk_model_summary.png", "Stacking Risk Model Summary"),
-#     ("actual_vs_predicted_confusion_matrix.png", "Confusion Matrix"),
-#     ("classification_misclass_distribution.png", "Misclassification Distribution"),
-#     ("grouped_metrics_per_model.png", "Model Metrics Comparison"),
-#     ("shap_comparison_base_models.png", "SHAP Comparison Across Base Models")
-# ]
-
-# for file, caption in classification_figures:
-#     show_image(classification_path, file, caption)
