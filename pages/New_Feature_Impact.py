@@ -12,14 +12,14 @@ Welcome to the Feature Impact page of **PredictGrad**.
 
 This analysis explains how different academic and demographic features influence predictions across two stages:
 
-1. 🎯 **Subject Mark Prediction (Regression):**  
+1.  **Subject Mark Prediction (Regression):**  
    Predict Semester 3 marks for:
    - Math-3
    - Digital Electronics (DE)
    - Full Stack Development (FSD)
    - Python
 
-2. ⚠️ **Academic Risk Flagging (Classification):**  
+2.  **Academic Risk Flagging (Classification):**  
    A student is flagged as "at risk" if their predicted Semester 3 percentile drops by **10 or more points** compared to their Semester 2 percentile.
 
 Understanding which features drive these predictions helps uncover academic risks early and enables targeted intervention.
@@ -37,11 +37,22 @@ subject_tab, risk_tab = st.tabs(["Subject Models", "Main Risk Model"])
 
 with subject_tab:
     # === Subject selector ===
-    st.markdown("## 📊 Subject-Level Model Performance")
+    st.markdown("## Subject-Level Model Performance")
+    st.markdown("""
+    Select a subject to view its model performance. This includes visualizations for:
+    - Optimized Ensemble Model Summary
+    - SHAP Summary
+    - Feature Importances
+    - Cross-Validation Predictions
+    - Actual vs Predicted Marks
+    - Prediction Errors
+    - Error Distribution
+    - MAE Comparison by Algorithm   
+    """)
     
     subject_code = "de"  # Default to Digital Electronics for initial load
         
-    de_tab, math3_tab, fsd_tab, python_tab = st.tabs(["Digital Electronics (DE)", "Math-3", "Full Stack Development (FSD)", "Python"])
+    de_tab, math3_tab, fsd_tab, python_tab = st.tabs(["Digital Electronics (DE)", "Math-3", "Full Stack Development (FSD)", "Python"], width=600)
         
     with de_tab:
         st.markdown("### Digital Electronics (DE) Model Performance")
