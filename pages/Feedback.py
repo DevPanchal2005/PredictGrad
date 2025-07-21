@@ -14,8 +14,8 @@ REVIEW_LIMIT = 6
 
 # Expanded filter words to prevent "lol" variations and vandalism
 FILTER_WORDS = {
-    "lol", "lolis", "laughing", "out", "loud",  # Cover "laughing out loud" and variations
-    "haha", "hehe", "lmao", "rofl"  # Other informal laughter terms
+    "lol", "lolis", "laughing",   # Cover "laughing out loud" and variations
+    "haha", "hehe", "lmao", "rofl", '3'    # Other informal laughter terms
 }
 
 # Load reviews
@@ -42,10 +42,13 @@ def save_word_count(counter):
     with open(WORD_COUNT_PATH, "w", encoding="utf-8") as file:
         json.dump(dict(counter), file)
 
-# Filter words: stop words, "lol" variations, and vandalism
+# Filter words: stop words, "lol" variations, single letters, and digits
 def should_count_word(word):
     # Use regex to catch "lol" with special characters (e.g., "lol!")
     if re.search(r'l+o+l+[!@#$%^&*]*', word.lower()):
+        return False
+    # Exclude single letters and digits
+    if len(word) == 1 or word.isdigit():
         return False
     # Check against stop words and filter words
     return (word.lower() not in STOPWORDS and 
@@ -61,7 +64,7 @@ def contains_filtered_words(review):
             return True
         # Check for other filter words
         if any(fw in word.lower() for fw in FILTER_WORDS) or word.lower() in FILTER_WORDS:
-            return True
+            return True 
     return False
 
 # Initialize data
@@ -99,7 +102,7 @@ if word_count:
         wordcloud = WordCloud(
             width=800,
             height=400,
-            background_color="white",  # Lighter background for clarity
+            background_color="#FCFAEE",  # Lighter background for clarity
             max_words=50,  # Limit to avoid clutter
             min_font_size=12,  # Ensure readability
             scale=15,  # Higher resolution
@@ -128,7 +131,11 @@ if st.button("Submit Review"):
             save_reviews(review_queue)
 
             # Process words for word count: remove punctuation, normalize case
-            words = re.findall(r'\b\w+\b', user_review.lower())
+            # Removes 's, 'd, and other apostrophes from words
+            processed_review = user_review.lower()
+            processed_review = re.sub(r"'(s|d)\b", "", processed_review)
+            processed_review = processed_review.replace("'", "")
+            words = re.findall(r'\b\w+\b', processed_review)
             for word in words:
                 if should_count_word(word):
                     word_count[word] += 1

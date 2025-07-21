@@ -3,12 +3,12 @@ import os
 from PIL import Image
 
 # Set page config
-st.set_page_config(page_title="Feature Impact", page_icon='🔍', layout='centered')
+st.set_page_config(page_title="Model Analysis", page_icon='🔍', layout='centered')
 
-st.title("🔍 Feature Impact Analysis")
+st.title("🔍 Model Analysis")
 
 st.markdown("""
-Welcome to the Feature Impact page of **PredictGrad**.
+Welcome to the Model Analysis page of **PredictGrad**.
 
 This analysis explains how different academic and demographic features influence predictions across two stages:
 

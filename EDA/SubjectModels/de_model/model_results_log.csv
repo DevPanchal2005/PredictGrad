@@ -1,7 +1,7 @@
 Model,Approach,MAE
 Multiple Linear Regression (MSE loss),multivariate regression + 5-Fold cv + one-hot encoding,7.5616
-Quantile Regression (MAE loss),q=0.5 + 5-Fold CV + one-hot encoding,7.5496
 Multiple Linear Regression (MSE loss + High VIF columns dropped),Multivariate regression + 5-Fold CV + one-hot encoding,7.624
+Quantile Regression (MAE loss),q=0.5 + 5-Fold CV + one-hot encoding,7.5496
 Quantile Regression (MAE loss High VIF columns dropped),q=0.5 + 5-Fold CV + one-hot encoding,7.7069
 Polynomial Regression (Order 2),5-Fold CV + one-hot encoding + degree 2,28.8104
 Polynomial Regression (Order 2),5-Fold CV + one-hot encoding + degree 2 + high VIF columns dropped,33.3695
