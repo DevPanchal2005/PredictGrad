@@ -18,7 +18,7 @@ pg = st.navigation({
     "Home": [home],
     "Predict": [predict_student_risk, demo], # Grouped prediction
     "Insights": [data_insights, model_selection, model_analysis], # Model selection
-    "About": [feedback, credits] # Grouped feedback and credits
+    "About": [feedback,] # Grouped feedback and credits
 })
 
 # Run the navigation

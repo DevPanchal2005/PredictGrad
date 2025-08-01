@@ -8,7 +8,7 @@ import re
 import numpy as np
 
 # CSS for custom styling
-st.html("<style> ::selection { color: #ff6ec7; background-color: #47002C } </style>")
+st.html("<style> ::selection { color: #FF7300; background-color: #472000 } </style>")
 
 # File Paths
 REVIEW_PATH = "reviews/recent_reviews.json"

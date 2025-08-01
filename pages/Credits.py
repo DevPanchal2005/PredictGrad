@@ -1,7 +1,7 @@
 import streamlit as st
 
 # CSS for custom styling
-st.html("<style> ::selection { color: #ff6ec7; background-color: #47002C } </style>")
+st.html("<style> ::selection { color: #FF7300; background-color: #472000 } </style>")
 
 st.set_page_config(page_title="Credits", layout="centered", page_icon='📜')
 st.title("🎖️ Credits")
