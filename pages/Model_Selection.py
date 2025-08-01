@@ -4,6 +4,9 @@ import pandas as pd
 
 from EDA.SubjectModels.de_model.models_info import models as de_models
 
+# CSS for custom styling
+st.html("<style> ::selection { color: #FF7300; background-color: #472000 } </style>")
+
 st.set_page_config(page_title="Model Selection", page_icon='⚙️', layout='wide')
 
 st.title("⚙️ Model Selection")
@@ -14,9 +17,9 @@ Welcome to the Model Selection page of **PredictGrad**.
 This page provides an overview of the different models used in the project and their performance metrics.
 
 **Key Insights:**
--  **Model **
--  **Approach **
--  **Performance Metrics **
+-  **Model**
+-  **Approach**
+-  **Performance Metrics**
     - **Mean Absolute Error (MAE)**
             """)   
            
@@ -46,9 +49,10 @@ def show_models(subject):
                 st.markdown("### Voting Regressor")
             case _:
                 pass
-
-        with st.expander(f"{model_df["Model"].iloc[i]}\n{model_df['Approach'].iloc[i]}\nMAE : {model_df['MAE'].iloc[i]}"):
-            st.markdown(f"Approach : {model_df['Approach'].iloc[i]}")
+        # Display model details
+        with st.expander(f"Model: {model_df["Model"].iloc[i]} | Approach: {model_df['Approach'].iloc[i]} | MAE: {model_df['MAE'].iloc[i]}"):
+            st.markdown(f"#### Model: {model_df['Model'].iloc[i]}")
+            st.markdown(f"#### Approach: {model_df['Approach'].iloc[i]}")
             st.metric("Mean Absolute Error (MAE)", model_df['MAE'].iloc[i])
             st.code(model_df['Code'].iloc[i], language="python")
     

@@ -3,8 +3,12 @@ import pandas as pd
 import os
 from PIL import Image
 
+# CSS for custom styling
+st.html("<style> ::selection { color: #FF7300; background-color: #472000 } </style>")
+
 # Page config
 st.set_page_config(page_title="Data Insights", layout="wide", page_icon='📊')
+
 st.title("📊 Data Insights")
 st.markdown("""
 Explore the underlying dataset powering PredictGrad. Understand how academic, demographic, and administrative features relate to student performance and academic risk.

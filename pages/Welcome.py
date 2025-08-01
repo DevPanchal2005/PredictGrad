@@ -1,5 +1,12 @@
 import streamlit as st
 
+# CSS for custom styling
+st.html("<style> ::selection { color: #2EAFFF; background-color: #002C47 } </style>")
+
+
+# Set page configuration
+st.set_page_config(page_title="PredictGrad", page_icon='🎓', layout='wide')
+
 # Title & Tagline
 st.title("PredictGrad")
 st.markdown("### Academic Risk Prediction for Engineering Students")
