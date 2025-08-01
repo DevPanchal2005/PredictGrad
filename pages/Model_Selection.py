@@ -14,9 +14,9 @@ Welcome to the Model Selection page of **PredictGrad**.
 This page provides an overview of the different models used in the project and their performance metrics.
 
 **Key Insights:**
--  **Model :**
--  **Approach :**
--  **Performance Metrics :**
+-  **Model **
+-  **Approach **
+-  **Performance Metrics **
     - **Mean Absolute Error (MAE)**
             """)   
            
@@ -47,11 +47,11 @@ def show_models(subject):
             case _:
                 pass
 
-        with st.expander(f"{model_df["Model"].iloc[i]} | MAE : {model_df['MAE'].iloc[i]}"):
+        with st.expander(f"{model_df["Model"].iloc[i]}\n{model_df['Approach'].iloc[i]}\nMAE : {model_df['MAE'].iloc[i]}"):
             st.markdown(f"Approach : {model_df['Approach'].iloc[i]}")
             st.metric("Mean Absolute Error (MAE)", model_df['MAE'].iloc[i])
             st.code(model_df['Code'].iloc[i], language="python")
-
+    
 de_tab, math3_tab, fsd_tab, python_tab = st.tabs(["Digital Electronics (DE)", "Math-3", "Full Stack Development (FSD)", "Python"])
 
 prerequisite_code = """
