@@ -44,37 +44,302 @@ print(f"MAE: {mean_mae:.4f}")
     "Model": "Multiple Linear Regression (MSE loss + High VIF columns dropped)",
     "Approach": "Multivariate regression + 5-Fold CV + one-hot encoding",
     "MAE": 7.624,
-    "Code": ""
+    "Code": """
+# One-hot encode categorical columns and drop the first column of each
+df_encoded = pd.get_dummies(
+    df,
+    columns=["Gender", "Religion", "Branch", "Section-1", "Section-2", "Section-3"],
+    drop_first=True,
+)
+# Without dropping High VIF columns: MAE: 6.6619
+
+# drop columns with too high VIF
+columns_to_drop = [
+    "Math-1 Theory",
+    "DBMS Theory",
+    "Sem 2 Percentage",
+    "Sem 1 Percentage",
+]
+
+# Drop columns, ignoring those not found
+df_encoded = df_encoded.drop(columns=columns_to_drop, errors="ignore")
+
+# Define target and feature columns
+target_col = "DE Theory"
+
+# All remaining columns except target are used as features
+feature_cols = [col for col in df_encoded.columns if col != target_col]
+
+X = df_encoded[feature_cols]
+y = df_encoded[target_col]
+
+# Initialize linear regression model
+model = LinearRegression()
+
+# Set up 5-Fold Cross-Validation
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+
+# Compute Negative MAE scores across folds
+neg_mae_scores = cross_val_score(model, X, y, cv=kf, scoring="neg_mean_absolute_error")
+
+# Convert to positive MAE values
+mae_scores = -neg_mae_scores
+mean_mae = np.mean(mae_scores)
+
+# Print results to terminal
+print("Model: Multiple Linear Regression (MSE loss + High VIF columns dropped)")
+print("Approach: Multivariate regression + 5-Fold cv + one-hot encoding")
+print(f"MAE: {mean_mae:.4f}")"""
   },
   {
     "Model": "Quantile Regression (MAE loss)",
     "Approach": "q=0.5 + 5-Fold CV + one-hot encoding",
     "MAE": 7.5496,
-    "Code": ""
+    "Code": """
+# One-hot encode categorical columns and drop the first column of each
+df_encoded = pd.get_dummies(
+    df,
+    columns=["Gender", "Religion", "Branch", "Section-1", "Section-2", "Section-3"],
+    drop_first=True,
+)
+
+# Define target and feature columns
+target_col = "DE Theory"
+
+# All remaining columns except target are used as features
+feature_cols = [col for col in df_encoded.columns if col != target_col]
+
+X = df_encoded[feature_cols]
+y = df_encoded[target_col]
+
+# Add intercept manually
+X = sm.add_constant(X)
+
+# Cross-validation setup
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+mae_scores = []
+
+# Fit Quantile Regression (MAE = q=0.5) on each fold
+for train_index, test_index in kf.split(X):
+    # Ensure input is float type to prevent dtype=object errors
+    X_train = X.iloc[train_index].astype(float)
+    X_test = X.iloc[test_index].astype(float)
+    y_train = y.iloc[train_index].astype(float)
+    y_test = y.iloc[test_index].astype(float)
+
+    # Fit Quantile Regression model (q=0.5 corresponds to MAE minimization)
+    model = sm.QuantReg(y_train, X_train)
+    result = model.fit(q=0.5)
+
+    # Predict and calculate fold MAE
+    preds = result.predict(X_test)
+    fold_mae = np.mean(np.abs(y_test - preds))
+    mae_scores.append(fold_mae)
+
+mean_mae = np.mean(mae_scores)
+
+# Print and log
+print("Model: Quantile Regression (MAE loss)")
+print("Approach: q=0.5 + 5-Fold cv + one-hot encoding")
+print(f"MAE: {mean_mae:.4f}")"""
   },
   {
     "Model": "Quantile Regression (MAE loss High VIF columns dropped)",
     "Approach": "q=0.5 + 5-Fold CV + one-hot encoding",
     "MAE": 7.7069,
-    "Code": ""
+    "Code": """
+# One-hot encode categorical columns and drop the first column of each
+df_encoded = pd.get_dummies(
+    df,
+    columns=["Gender", "Religion", "Branch", "Section-1", "Section-2", "Section-3"],
+    drop_first=True,
+)
+
+# drop columns with too high VIF
+columns_to_drop = [
+    "Math-1 Theory",
+    "DBMS Theory",
+    "Sem 2 Percentage",
+    "Sem 1 Percentage",
+]
+
+# Drop columns, ignoring those not found
+df_encoded = df_encoded.drop(columns=columns_to_drop, errors="ignore")
+# Define target and feature columns
+target_col = "DE Theory"
+
+# All remaining columns except target are used as features
+feature_cols = [col for col in df_encoded.columns if col != target_col]
+
+X = df_encoded[feature_cols]
+y = df_encoded[target_col]
+
+# Add intercept manually
+X = sm.add_constant(X)
+
+# Cross-validation setup
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+mae_scores = []
+
+# Fit Quantile Regression (MAE = q=0.5) on each fold
+for train_index, test_index in kf.split(X):
+    # Ensure input is float type to prevent dtype=object errors
+    X_train = X.iloc[train_index].astype(float)
+    X_test = X.iloc[test_index].astype(float)
+    y_train = y.iloc[train_index].astype(float)
+    y_test = y.iloc[test_index].astype(float)
+
+    # Fit Quantile Regression model (q=0.5 corresponds to MAE minimization)
+    model = sm.QuantReg(y_train, X_train)
+    result = model.fit(q=0.5)
+
+    # Predict and calculate fold MAE
+    preds = result.predict(X_test)
+    fold_mae = np.mean(np.abs(y_test - preds))
+    mae_scores.append(fold_mae)
+
+mean_mae = np.mean(mae_scores)
+
+# Print and log
+print("Model: Quantile Regression (MAE loss, High VIF columns dropped)")
+print("Approach: q=0.5 + 5-Fold cv + one-hot encoding")
+print(f"MAE: {mean_mae:.4f}")"""
   },
   {
     "Model": "Polynomial Regression (Order 2)",
     "Approach": "5-Fold CV + one-hot encoding + degree 2",
     "MAE": 28.8104,
-    "Code": ""
+    "Code": """
+# One-hot encode categorical columns and drop the first column of each
+df_encoded = pd.get_dummies(
+    df,
+    columns=["Gender", "Religion", "Branch", "Section-1", "Section-2", "Section-3"],
+    drop_first=True,
+)
+
+# Define target and feature columns
+target_col = "DE Theory"
+
+# All remaining columns except target are used as features
+feature_cols = [col for col in df_encoded.columns if col != target_col]
+
+X = df_encoded[feature_cols]
+y = df_encoded[target_col]
+
+# Initialize polynomial regression (order 2)
+polyreg = make_pipeline(PolynomialFeatures(degree=2), LinearRegression())
+
+# Set up 5-Fold Cross-Validation
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+
+# Compute Negative MAE scores
+neg_mae_scores = cross_val_score(
+    polyreg, X, y, cv=kf, scoring="neg_mean_absolute_error"
+)
+
+# Convert to positive MAE
+mae_scores = -neg_mae_scores
+mean_mae = np.mean(mae_scores)
+
+# Print results
+print("Model: Polynomial Regression (Order 2)")
+print(
+    "Approach: Full-feature polynomial regression (degree 2) with 5-Fold CV and one-hot encoding"
+)
+print(f"MAE: {mean_mae:.4f}")"""
   },
   {
     "Model": "Polynomial Regression (Order 2)",
     "Approach": "5-Fold CV + one-hot encoding + degree 2 + high VIF columns dropped",
     "MAE": 33.3695,
-    "Code": ""
+    "Code": """
+# One-hot encode categorical columns and drop the first column of each
+df_encoded = pd.get_dummies(
+    df,
+    columns=["Gender", "Religion", "Branch", "Section-1", "Section-2", "Section-3"],
+    drop_first=True,
+)
+
+# drop columns with too high VIF
+columns_to_drop = [
+    "Math-1 Theory",
+    "DBMS Theory",
+    "Sem 2 Percentage",
+    "Sem 1 Percentage",
+]
+
+# Drop columns, ignoring those not found
+df_encoded = df_encoded.drop(columns=columns_to_drop, errors="ignore")
+
+# Define target and feature columns
+target_col = "DE Theory"
+
+# All remaining columns except target are used as features
+feature_cols = [col for col in df_encoded.columns if col != target_col]
+
+X = df_encoded[feature_cols]
+y = df_encoded[target_col]
+
+# Initialize polynomial regression (order 2)
+polyreg = make_pipeline(PolynomialFeatures(degree=2), LinearRegression())
+
+# Set up 5-Fold Cross-Validation
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+
+# Compute Negative MAE scores
+neg_mae_scores = cross_val_score(
+    polyreg, X, y, cv=kf, scoring="neg_mean_absolute_error"
+)
+
+# Convert to positive MAE
+mae_scores = -neg_mae_scores
+mean_mae = np.mean(mae_scores)
+
+# Print results
+print("Model: Polynomial Regression (Order 2)")
+print("Approach: 5-Fold CV + one-hot encoding + high VIF columns dropped")
+print(f"MAE: {mean_mae:.4f}")"""
   },
   {
     "Model": "Polynomial Regression (Order 3)",
     "Approach": "5-Fold CV + one-hot encoding + degree 3",
     "MAE": 18.0693,
-    "Code": ""
+    "Code": """
+# One-hot encode categorical columns and drop the first column of each
+df_encoded = pd.get_dummies(
+    df,
+    columns=["Gender", "Religion", "Branch", "Section-1", "Section-2", "Section-3"],
+    drop_first=True,
+)
+
+# Define target and feature columns
+target_col = "DE Theory"
+
+# All remaining columns except target are used as features
+feature_cols = [col for col in df_encoded.columns if col != target_col]
+
+X = df_encoded[feature_cols]
+y = df_encoded[target_col]
+
+# Initialize polynomial regression (order 3)
+polyreg = make_pipeline(PolynomialFeatures(degree=3), LinearRegression())
+
+# Set up 5-Fold Cross-Validation
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+
+# Compute Negative MAE scores
+neg_mae_scores = cross_val_score(
+    polyreg, X, y, cv=kf, scoring="neg_mean_absolute_error"
+)
+
+# Convert to positive MAE
+mae_scores = -neg_mae_scores
+mean_mae = np.mean(mae_scores)
+
+# Print results
+print("Model: Polynomial Regression (Order 3)")
+print("Approach: Full-feature polynomial regression + 5-Fold CV + one-hot encoding")
+print(f"MAE: {mean_mae:.4f}")"""
   },
   {
     "Model": "Polynomial Regression (Order 3)",
