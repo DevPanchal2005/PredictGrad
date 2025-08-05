@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 from PIL import Image
+from plotly.io import read_json
 
 # CSS for custom styling
 st.html("<style> ::selection { color: #7f00ff;} </style>")
@@ -16,6 +17,7 @@ Explore the underlying dataset powering PredictGrad. Understand how academic, de
 
 # Paths
 image_dir = os.path.join("EDA", "main_model", "eda_images")
+json_dir = os.path.join("EDA", "main_model", "eda_json_graphs")
 dataset_path = os.path.join("dataset", "student_performance_dataset.csv")
 
 # Load dataset (cached for performance)
@@ -34,7 +36,7 @@ col3.metric("Semesters Covered", "1, 2, and 3")
 
 # --- Sample View ---
 st.subheader("🧾 Sample Data View")
-st.dataframe(df.head(10), use_container_width=True)
+st.dataframe(df.head(10), use_container_width=True, hide_index=True)
 
 # --- EDA Image Panels ---
 st.subheader("📌 Feature Relationships and Risk Insights")
@@ -44,10 +46,11 @@ def show_image(img_file, caption):
     st.image(Image.open(img_path), caption=caption, use_container_width=True)
 
 # 1. Overall Risk Distribution
-show_image("risk_flag_distribution.png", "Distribution of Academic Risk (Sem3_Risk_Flag)")
+st.plotly_chart(read_json(os.path.join(json_dir, "risk_flag_distribution.json")), use_container_width=True)
 
 # 2. Correlation + VIF + Mutual Info
-show_image("correlation_heatmap.png", "Feature Correlation Heatmap")
+# show_image("correlation_heatmap.png", "Feature Correlation Heatmap")
+st.plotly_chart(read_json(os.path.join(json_dir, "correlation_heatmap.json")), use_container_width=True)
 show_image("high_correlation_pairs.png", "Highly Correlated Feature Pairs")
 show_image("high_vif_features.png", "Features with High VIF")
 show_image("mutual_information_top25.png", "Top 25 Features by Mutual Information")
@@ -56,28 +59,38 @@ show_image("mutual_information_top25.png", "Top 25 Features by Mutual Informatio
 st.markdown("#### 🧑‍🎓 Demographic Influence on Risk")
 col4, col5, col6 = st.columns(3)
 with col4:
-    show_image("gender_vs_risk_flag.png", "Gender vs Risk")
+    # show_image("gender_vs_risk_flag.png", "Gender vs Risk")
+    st.plotly_chart(read_json(os.path.join(json_dir, "Gender_vs_risk_flag.json")), use_container_width=True)
 with col5:
-    show_image("religion_vs_risk_flag.png", "Religion vs Risk")
+    # show_image("religion_vs_risk_flag.png", "Religion vs Risk")
+    st.plotly_chart(read_json(os.path.join(json_dir, "Religion_vs_risk_flag.json")), use_container_width=True)
 with col6:
-    show_image("branch_vs_risk_flag.png", "Branch vs Risk")
+    # show_image("branch_vs_risk_flag.png", "Branch vs Risk")
+    st.plotly_chart(read_json(os.path.join(json_dir, "Branch_vs_risk_flag.json")), use_container_width=True)
 
 # 4. Section/Division Influence
 st.markdown("#### 🏫 Section/Division vs Risk")
 col7, col8, col9 = st.columns(3)
 with col7:
-    show_image("section1_vs_risk_flag.png", "Section 1 vs Risk")
+    # show_image("section1_vs_risk_flag.png", "Section 1 vs Risk")
+    st.plotly_chart(read_json(os.path.join(json_dir, "section-1_vs_risk_flag.json")), use_container_width=True)
 with col8:
-    show_image("section2_vs_risk_flag.png", "Section 2 vs Risk")
+    # show_image("section2_vs_risk_flag.png", "Section 2 vs Risk")
+    st.plotly_chart(read_json(os.path.join(json_dir, "section-2_vs_risk_flag.json")), use_container_width=True)
 with col9:
-    show_image("section3_vs_risk_flag.png", "Section 3 vs Risk")
+    # show_image("section3_vs_risk_flag.png", "Section 3 vs Risk")
+    st.plotly_chart(read_json(os.path.join(json_dir, "section-3_vs_risk_flag.json")), use_container_width=True)
 
 # 5. Academic Performance Distributions
 st.subheader("📈 Academic Trends vs Risk")
-show_image("sem1_vs_risk_flag.png", "Semester 1 Marks vs Risk")
-show_image("sem2_vs_risk_flag.png", "Semester 2 Marks vs Risk")
-show_image("pred_sem3_vs_risk_flag.png", "Predicted Sem 3 Performance vs Risk")
-show_image("percentile_drop_vs_risk_flag.png", "Percentile Drop vs Risk")
+# show_image("sem1_vs_risk_flag.png", "Semester 1 Marks vs Risk")
+st.plotly_chart(read_json(os.path.join(json_dir, "Sem 1 Percentage vs Risk Flag.json")), use_container_width=True)
+# show_image("sem2_vs_risk_flag.png", "Semester 2 Marks vs Risk")
+st.plotly_chart(read_json(os.path.join(json_dir, "Sem 2 Percentage vs Risk Flag.json")), use_container_width=True)
+# show_image("pred_sem3_vs_risk_flag.png", "Predicted Sem 3 Performance vs Risk")
+st.plotly_chart(read_json(os.path.join(json_dir, "Predicted Sem 3 Percentage vs Risk Flag.json")), use_container_width=True)\
+# show_image("percentile_drop_vs_risk_flag.png", "Percentile Drop vs Risk")
+st.plotly_chart(read_json(os.path.join(json_dir, "Predicted Percentile Drop vs Risk Flag.json")), use_container_width=True)
 
 # 6. KDE Views
 st.subheader("🧮 Percentile and Score Distributions")
