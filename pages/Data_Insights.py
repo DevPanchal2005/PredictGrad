@@ -73,13 +73,13 @@ st.markdown("#### 🏫 Section/Division vs Risk")
 col7, col8, col9 = st.columns(3)
 with col7:
     # show_image("section1_vs_risk_flag.png", "Section 1 vs Risk")
-    st.plotly_chart(read_json(os.path.join(json_dir, "section-1_vs_risk_flag.json")), use_container_width=True)
+    st.plotly_chart(read_json(os.path.join(json_dir, "Section-1_vs_risk_flag.json")), use_container_width=True)
 with col8:
     # show_image("section2_vs_risk_flag.png", "Section 2 vs Risk")
-    st.plotly_chart(read_json(os.path.join(json_dir, "section-2_vs_risk_flag.json")), use_container_width=True)
+    st.plotly_chart(read_json(os.path.join(json_dir, "Section-2_vs_risk_flag.json")), use_container_width=True)
 with col9:
     # show_image("section3_vs_risk_flag.png", "Section 3 vs Risk")
-    st.plotly_chart(read_json(os.path.join(json_dir, "section-3_vs_risk_flag.json")), use_container_width=True)
+    st.plotly_chart(read_json(os.path.join(json_dir, "Section-3_vs_risk_flag.json")), use_container_width=True)
 
 # 5. Academic Performance Distributions
 st.subheader("📈 Academic Trends vs Risk")
