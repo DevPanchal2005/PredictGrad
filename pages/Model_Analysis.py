@@ -3,7 +3,7 @@ import os
 from PIL import Image
 
 # CSS for custom styling
-st.html("<style> ::selection { color: #ff6ec7; background-color: #47002C } </style>")
+st.html("<style> ::selection { color: #7f00ff;} </style>")
 
 # Set page config
 st.set_page_config(page_title="Model Analysis", page_icon='🔍', layout='centered')

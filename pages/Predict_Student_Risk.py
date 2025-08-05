@@ -8,7 +8,7 @@ from io import BytesIO
 from sklearn.exceptions import NotFittedError
 
 # CSS for custom styling
-st.html("<style> ::selection { color: #1FFA00; background-color: #172C11 } </style>")
+st.html("<style> ::selection { color: #1FFA00;} </style>")
 
 st.set_page_config(page_title="Predict Student Risk", page_icon='🔮', layout='wide')
 

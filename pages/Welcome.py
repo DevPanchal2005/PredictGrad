@@ -1,7 +1,7 @@
 import streamlit as st
 
 # CSS for custom styling
-st.html("<style> ::selection { color: #2EAFFF; background-color: #002C47 } </style>")
+st.html("<style> ::selection { color: #2EAFFF;} </style>")
 
 
 # Set page configuration
