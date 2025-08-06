@@ -8,14 +8,13 @@ st.title("Credits")
 
 with st.container(border=True):
     "## Made By :"
-    "### **Shail K Patel**"
-    st.link_button("LinkedIn Profile", "https://www.linkedin.com/in/shail-k-patel/", icon="🔗", use_container_width=True)
-    st.link_button("GitHub Profile", "https://github.com/ShailKPatel", icon="🐙", use_container_width=True)
-    st.link_button("Portfolio Website", "https://shailkpatel.github.io/", icon="🌐", use_container_width=True)
+    "### **Dev Panchal**"
+    st.link_button("LinkedIn Profile", "https://www.linkedin.com/in/dev-panchal-connect/", icon="🔗", use_container_width=True)
+    st.link_button("GitHub Profile", "https://github.com/devpanchal2005", icon="🐙", use_container_width=True)
 
 with st.container(border=True):
     "## GitHub Repository :"
-    st.link_button("PredictGrad", "https://github.com/ShailKPatel/PredictGrad", icon="🔗")
+    st.link_button("PredictGrad", "https://github.com/devpanchal2005/predictgrad/", icon="🔗")
 
 with st.container(border=True):
     """
