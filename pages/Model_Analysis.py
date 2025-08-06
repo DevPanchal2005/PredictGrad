@@ -2,13 +2,23 @@ import streamlit as st
 import os
 from PIL import Image
 
+<<<<<<< HEAD
+=======
+st.set_page_config(page_title="Model Analysis", page_icon='🔍', layout='centered')
+
+>>>>>>> other-remote/main
 # CSS for custom styling
 st.html("<style> ::selection { color: #7f00ff;} </style>")
 
 # Set page config
+<<<<<<< HEAD
 st.set_page_config(page_title="Model Analysis", page_icon='🔍', layout='centered')
 
 st.title("🔍 Model Analysis")
+=======
+
+st.title("Model Analysis")
+>>>>>>> other-remote/main
 
 st.markdown("""
 Welcome to the Model Analysis page of **PredictGrad**.
@@ -55,7 +65,11 @@ with subject_tab:
     
     subject_code = "de"  # Default to Digital Electronics for initial load
         
+<<<<<<< HEAD
     de_tab, math3_tab, fsd_tab, python_tab = st.tabs(["Digital Electronics (DE)", "Math-3", "Full Stack Development (FSD)", "Python"], width=550)
+=======
+    de_tab, math3_tab, fsd_tab, python_tab = st.tabs(["Digital Electronics (DE)", "Math-3", "Full Stack Development (FSD)", "Python"], width=600)
+>>>>>>> other-remote/main
         
     with de_tab:
         st.markdown("### Digital Electronics (DE) Model Performance")

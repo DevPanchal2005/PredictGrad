@@ -4,12 +4,13 @@ import pandas as pd
 
 from EDA.SubjectModels.de_model.models_info import models as de_models
 
+st.set_page_config(page_title="Model Selection", page_icon='⚙️', layout='wide')
+
 # CSS for custom styling
 st.html("<style> ::selection { color: #7f00ff;} </style>")
 
-st.set_page_config(page_title="Model Selection", page_icon='⚙️', layout='wide')
 
-st.title("⚙️ Model Selection")
+st.title("Model Selection")
 
 st.markdown("""
 Welcome to the Model Selection page of **PredictGrad**.
@@ -22,7 +23,7 @@ This page provides an overview of the different models used in the project and t
 -  **Performance Metrics**
     - **Mean Absolute Error (MAE)**
             """)   
-           
+
 def show_models(subject):
     model_df = pd.DataFrame(eval(f"{subject}_models"))
     for i in range(len(model_df)):

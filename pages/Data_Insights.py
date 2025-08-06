@@ -4,13 +4,14 @@ import os
 from PIL import Image
 from plotly.io import read_json
 
+st.set_page_config(page_title="Data Insights", layout="wide", page_icon='📊')
+
 # CSS for custom styling
 st.html("<style> ::selection { color: #7f00ff;} </style>")
 
 # Page config
-st.set_page_config(page_title="Data Insights", layout="wide", page_icon='📊')
 
-st.title("📊 Data Insights")
+st.title("Data Insights")
 st.markdown("""
 Explore the underlying dataset powering PredictGrad. Understand how academic, demographic, and administrative features relate to student performance and academic risk.
 """)
