@@ -255,6 +255,3 @@ The entire PredictGrad pipeline has been deployed using Streamlit to allow users
 ## Contact
 
 For any questions, collaboration, or feedback:
-
-**Shail K Patel**
-LinkedIn: [Shail K Patel](https://www.linkedin.com/in/shailkpatel/)
