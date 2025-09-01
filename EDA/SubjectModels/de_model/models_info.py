@@ -1373,44 +1373,528 @@ results_df.to_csv(log_file, mode="a", header=not os.path.exists(log_file), index
     "Model": "XGBoost Regressor",
     "Approach": "Full-feature regression + OneHotEncoding + 5-Fold CV",
     "MAE": 8.7712,
-    "Code": ""
+    "Code": """# Define target and features
+target_col = "DE Theory"
+X = df.drop(columns=[target_col])
+y = df[target_col]
+
+# Identify categorical and numeric columns
+categorical_cols = [
+    "Gender",
+    "Religion",
+    "Branch",
+    "Section-1",
+    "Section-2",
+    "Section-3",
+]
+numeric_cols = [col for col in X.columns if col not in categorical_cols]
+
+# Preprocessing pipeline
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("cat", OneHotEncoder(drop="first", handle_unknown="ignore"), categorical_cols),
+        ("num", "passthrough", numeric_cols),
+    ]
+)
+
+# Define the XGBoost pipeline
+model = Pipeline(
+    steps=[
+        ("preprocessor", preprocessor),
+        ("regressor", XGBRegressor(random_state=42, verbosity=0)),
+    ]
+)
+
+# 5-Fold cross-validation
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+neg_mae_scores = cross_val_score(model, X, y, cv=kf, scoring="neg_mean_absolute_error")
+mae_scores = -neg_mae_scores
+mean_mae = np.mean(mae_scores)
+
+# Print results
+print("Model: XGBoost Regressor")
+print("Approach: Full-feature regression + OneHotEncoding + 5-Fold CV")
+print(f"MAE: {mean_mae:.4f}")"""
   },
+  # XGBoost Regressor (Tuned) (Best Params: {'regressor__colsample_bytree': 0.8, 'regressor__learning_rate': 0.05, 'regressor__max_depth': 3, 'regressor__n_estimators': 100, 'regressor__subsample': 0.8})
   {
     "Model": "XGBoost Regressor",
     "Approach": "Tuned (Best Params: {'regressor__colsample_bytree': 0.8, 'regressor__learning_rate': 0.05, 'regressor__max_depth': 3, 'regressor__n_estimators': 100, 'regressor__subsample': 0.8})",
     "MAE": 7.8803,
-    "Code": ""
+    "Code": """# Define target and features
+target_col = "DE Theory"
+X = df.drop(columns=[target_col])
+y = df[target_col]
+
+# Identify categorical and numeric columns
+categorical_cols = [
+    "Gender",
+    "Religion",
+    "Branch",
+    "Section-1",
+    "Section-2",
+    "Section-3",
+]
+numeric_cols = [col for col in X.columns if col not in categorical_cols]
+
+# Preprocessing pipeline
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("cat", OneHotEncoder(drop="first", handle_unknown="ignore"), categorical_cols),
+        ("num", "passthrough", numeric_cols),
+    ]
+)
+
+# Define the XGBoost pipeline
+xgb_pipeline = Pipeline(
+    steps=[
+        ("preprocessor", preprocessor),
+        ("regressor", XGBRegressor(random_state=42, verbosity=0)),
+    ]
+)
+
+# Define parameter grid
+param_grid = {
+    "regressor__n_estimators": [50, 100, 200],
+    "regressor__max_depth": [3, 5, 7],
+    "regressor__learning_rate": [0.01, 0.05, 0.1],
+    "regressor__colsample_bytree": [0.8, 0.9, 1.0],
+    "regressor__subsample": [0.8, 0.9, 1.0],
+}
+
+# Set up GridSearchCV
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+grid_search = GridSearchCV(
+    estimator=xgb_pipeline,
+    param_grid=param_grid,
+    scoring="neg_mean_absolute_error",
+    cv=kf,
+    verbose=1,
+    n_jobs=-1,
+)
+
+# Fit the GridSearchCV
+grid_search.fit(X, y)
+
+# Extract best model and parameters
+best_model = grid_search.best_estimator_
+best_params = grid_search.best_params_
+
+# Evaluate the best model with cross-validation
+neg_mae_scores = cross_val_score(
+    best_model, X, y, cv=kf, scoring="neg_mean_absolute_error"
+)
+mae_scores = -neg_mae_scores
+mean_mae = np.mean(mae_scores)
+
+# Print results
+print("Model: XGBoost Regressor (Tuned)")
+print(f"Best Params: {best_params}")
+print(f"MAE: {mean_mae:.4f}")"""
   },
+  # XGBoost Regressor (Tuned) (Best Params: {'regressor__colsample_bytree': 0.9, 'regressor__learning_rate': 0.05, 'regressor__max_depth': 3, 'regressor__n_estimators': 100, 'regressor__subsample': 0.9})
   {
     "Model": "XGBoost Regressor(Tuned)",
     "Approach": "Tuned (Best Params: {'regressor__colsample_bytree': 0.9, 'regressor__learning_rate': 0.05, 'regressor__max_depth': 3, 'regressor__n_estimators': 100, 'regressor__subsample': 0.9})",
     "MAE": 7.9463,
-    "Code": ""
+    "Code": """# Define target and features
+target_col = "DE Theory"
+X = df.drop(columns=[target_col])
+y = df[target_col]
+
+# Identify categorical and numeric columns
+categorical_cols = [
+    "Gender",
+    "Religion",
+    "Branch",
+    "Section-1",
+    "Section-2",
+    "Section-3",
+]
+numeric_cols = [col for col in X.columns if col not in categorical_cols]
+
+# Preprocessing pipeline
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("cat", OneHotEncoder(drop="first", handle_unknown="ignore"), categorical_cols),
+        ("num", "passthrough", numeric_cols),
+    ]
+)
+
+# Tuned XGBoost Regressor with best params
+xgb_best = XGBRegressor(
+    colsample_bytree=0.9,
+    learning_rate=0.05,
+    max_depth=3,
+    n_estimators=100,
+    subsample=0.9,
+    random_state=42,
+    verbosity=0,
+)
+
+# Final pipeline
+model = Pipeline(steps=[("preprocessor", preprocessor), ("regressor", xgb_best)])
+
+# 5-Fold cross-validation
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+neg_mae_scores = cross_val_score(model, X, y, cv=kf, scoring="neg_mean_absolute_error")
+mae_scores = -neg_mae_scores
+mean_mae = np.mean(mae_scores)
+
+# Print results
+print("Model: XGBoost Regressor(Tuned)")
+print(
+    "Approach: Tuned (Best Params: {'regressor__colsample_bytree': 0.9, 'regressor__learning_rate': 0.05, 'regressor__max_depth': 3, 'regressor__n_estimators': 100, 'regressor__subsample': 0.9})"
+)
+print(f"MAE: {mean_mae:.4f}")"""
   },
+  # LightGBM Regressor 
   {
     "Model": "LightGBM Regressor",
     "Approach": "Full-feature regression with 5-Fold CV and OneHotEncoding",
     "MAE": 8.3525,
-    "Code": ""
+    "Code": """# Define target and features
+target_col = "DE Theory"
+X = df.drop(columns=[target_col])
+y = df[target_col]
+
+# Identify categorical and numeric columns
+categorical_cols = [
+    "Gender",
+    "Religion",
+    "Branch",
+    "Section-1",
+    "Section-2",
+    "Section-3",
+]
+numeric_cols = [col for col in X.columns if col not in categorical_cols]
+
+# Preprocessing pipeline for encoding categorical features
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("cat", OneHotEncoder(drop="first", handle_unknown="ignore"), categorical_cols),
+        ("num", "passthrough", numeric_cols),
+    ]
+)
+
+# Define LightGBM model pipeline
+model = Pipeline(
+    steps=[
+        ("preprocessor", preprocessor),
+        ("regressor", LGBMRegressor(random_state=42, verbose=-1)),
+    ]
+)
+
+# Use 5-Fold CV with negative MAE
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+neg_mae_scores = cross_val_score(model, X, y, cv=kf, scoring="neg_mean_absolute_error")
+mae_scores = -neg_mae_scores
+mean_mae = np.mean(mae_scores)
+
+# Print results to terminal
+print("Model: LightGBM Regressor")
+print("Approach: Full-feature regression with 5-Fold CV and OneHotEncoding")
+print(f"MAE: {mean_mae:.4f}")"""
   },
+  # LightGBM Regressor (Tuned) (params: {'regressor__subsample': 0.9, 'regressor__num_leaves': 70, 'regressor__n_estimators': 100, 'regressor__max_depth': -1, 'regressor__learning_rate': 0.03, 'regressor__colsample_bytree': 1.0})
   {
     "Model": "LightGBM Regressor (Tuned)",
     "Approach": "Tuned with RandomizedSearchCV (params: {'regressor__subsample': 0.9, 'regressor__num_leaves': 70, 'regressor__n_estimators': 100, 'regressor__max_depth': -1, 'regressor__learning_rate': 0.03, 'regressor__colsample_bytree': 1.0})",
     "MAE": 7.9638,
-    "Code": ""
+    "Code": """# Define target and features
+target_col = "DE Theory"
+X = df.drop(columns=[target_col])
+y = df[target_col]
+
+# Identify column types
+categorical_cols = [
+    "Gender",
+    "Religion",
+    "Branch",
+    "Section-1",
+    "Section-2",
+    "Section-3",
+]
+numeric_cols = [col for col in X.columns if col not in categorical_cols]
+
+# Preprocessing pipeline
+preprocessor = ColumnTransformer(
+    [
+        ("cat", OneHotEncoder(drop="first", handle_unknown="ignore"), categorical_cols),
+        ("num", "passthrough", numeric_cols),
+    ]
+)
+
+# Define base pipeline
+base_pipeline = Pipeline(
+    [
+        ("preprocessor", preprocessor),
+        ("regressor", LGBMRegressor(random_state=42, verbose=-1)),
+    ]
+)
+
+# Define parameter grid
+param_distributions = {
+    "regressor__num_leaves": [20, 31, 50, 70],
+    "regressor__max_depth": [3, 5, 7, 9, -1],
+    "regressor__learning_rate": [0.01, 0.03, 0.05, 0.07, 0.1],
+    "regressor__n_estimators": [100, 200, 300, 500],
+    "regressor__subsample": [0.7, 0.8, 0.9, 1.0],
+    "regressor__colsample_bytree": [0.7, 0.8, 0.9, 1.0],
+}
+
+# Setup 5-Fold CV
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+
+# Run randomized search
+random_search = RandomizedSearchCV(
+    base_pipeline,
+    param_distributions=param_distributions,
+    n_iter=30,
+    scoring="neg_mean_absolute_error",
+    cv=kf,
+    verbose=1,
+    random_state=42,
+    n_jobs=-1,
+)
+
+# Fit search
+random_search.fit(X, y)
+best_model = random_search.best_estimator_
+best_params = random_search.best_params_
+best_score = -random_search.best_score_
+
+# Print best results
+print("Model: LightGBM Regressor (Tuned)")
+print("Best Params:", best_params)
+print(f"Best MAE: {best_score:.4f}")
+"""
   },
+  # LightGBM Regressor (Tuned) (params: {'regressor__subsample': 0.8, 'regressor__num_leaves': 70, 'regressor__n_estimators': 500, 'regressor__min_child_samples': 30, 'regressor__max_depth': 3, 'regressor__learning_rate': 0.01, 'regressor__colsample_bytree': 0.7})
   {
     "Model": "LightGBM Regressor (Tuned)",
     "Approach": "Tuned with RandomizedSearchCV (params: {'regressor__subsample': 0.8, 'regressor__num_leaves': 70, 'regressor__n_estimators': 500, 'regressor__min_child_samples': 30, 'regressor__max_depth': 3, 'regressor__learning_rate': 0.01, 'regressor__colsample_bytree': 0.7})",
     "MAE": 7.8892,
-    "Code": ""
+    "Code": """# Define target and features
+target_col = "DE Theory"
+X = df.drop(columns=[target_col])
+y = df[target_col]
+
+# Identify column types
+categorical_cols = [
+    "Gender",
+    "Religion",
+    "Branch",
+    "Section-1",
+    "Section-2",
+    "Section-3",
+]
+numeric_cols = [col for col in X.columns if col not in categorical_cols]
+
+# Preprocessing pipeline
+preprocessor = ColumnTransformer(
+    [
+        ("cat", OneHotEncoder(drop="first", handle_unknown="ignore"), categorical_cols),
+        ("num", "passthrough", numeric_cols),
+    ]
+)
+
+# Define base pipeline
+base_pipeline = Pipeline(
+    [
+        ("preprocessor", preprocessor),
+        ("regressor", LGBMRegressor(random_state=42, verbose=-1)),
+    ]
+)
+
+# Define optimized parameter grid
+param_distributions = {
+    "regressor__num_leaves": [20, 31, 50, 70],
+    "regressor__max_depth": [3, 5, 7, 9, -1],
+    "regressor__learning_rate": [0.01, 0.03, 0.05, 0.07, 0.1],
+    "regressor__n_estimators": [100, 200, 300, 500],
+    "regressor__subsample": [0.7, 0.8, 0.9, 1.0],
+    "regressor__colsample_bytree": [0.7, 0.8, 0.9, 1.0],
+    "regressor__min_child_samples": [10, 20, 30],
+}
+
+# Setup 5-Fold CV
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+
+# Run randomized search
+random_search = RandomizedSearchCV(
+    base_pipeline,
+    param_distributions=param_distributions,
+    n_iter=40,  # Slightly more than before
+    scoring="neg_mean_absolute_error",
+    cv=kf,
+    verbose=1,
+    random_state=42,
+    n_jobs=-1,
+)
+
+# Fit search
+random_search.fit(X, y)
+best_model = random_search.best_estimator_
+best_params = random_search.best_params_
+best_score = -random_search.best_score_
+
+# Print best results
+print("Model: LightGBM Regressor (Tuned)")
+print("Best Params:", best_params)
+print(f"Best MAE: {best_score:.4f}")# Define target and features
+target_col = "DE Theory"
+X = df.drop(columns=[target_col])
+y = df[target_col]
+
+# Identify column types
+categorical_cols = [
+    "Gender",
+    "Religion",
+    "Branch",
+    "Section-1",
+    "Section-2",
+    "Section-3",
+]
+numeric_cols = [col for col in X.columns if col not in categorical_cols]
+
+# Preprocessing pipeline
+preprocessor = ColumnTransformer(
+    [
+        ("cat", OneHotEncoder(drop="first", handle_unknown="ignore"), categorical_cols),
+        ("num", "passthrough", numeric_cols),
+    ]
+)
+
+# Define base pipeline
+base_pipeline = Pipeline(
+    [
+        ("preprocessor", preprocessor),
+        ("regressor", LGBMRegressor(random_state=42, verbose=-1)),
+    ]
+)
+
+# Define optimized parameter grid
+param_distributions = {
+    "regressor__num_leaves": [20, 31, 50, 70],
+    "regressor__max_depth": [3, 5, 7, 9, -1],
+    "regressor__learning_rate": [0.01, 0.03, 0.05, 0.07, 0.1],
+    "regressor__n_estimators": [100, 200, 300, 500],
+    "regressor__subsample": [0.7, 0.8, 0.9, 1.0],
+    "regressor__colsample_bytree": [0.7, 0.8, 0.9, 1.0],
+    "regressor__min_child_samples": [10, 20, 30],
+}
+
+# Setup 5-Fold CV
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+
+# Run randomized search
+random_search = RandomizedSearchCV(
+    base_pipeline,
+    param_distributions=param_distributions,
+    n_iter=40,  # Slightly more than before
+    scoring="neg_mean_absolute_error",
+    cv=kf,
+    verbose=1,
+    random_state=42,
+    n_jobs=-1,
+)
+
+# Fit search
+random_search.fit(X, y)
+best_model = random_search.best_estimator_
+best_params = random_search.best_params_
+best_score = -random_search.best_score_
+
+# Print best results
+print("Model: LightGBM Regressor (Tuned)")
+print("Best Params:", best_params)
+print(f"Best MAE: {best_score:.4f}")"""
   },
+  # LightGBM Regressor (Tuned) (params: OrderedDict({'regressor__colsample_bytree': 1.0, 'regressor__learning_rate': 0.012614141235943423, 'regressor__max_depth': 3, 'regressor__min_child_samples': 44, 'regressor__n_estimators': 540, 'regressor__num_leaves': 20, 'regressor__reg_alpha': 0.0, 'regressor__reg_lambda': 0.22975045403226968, 'regressor__subsample': 1.0}))
   {
     "Model": "LightGBM Regressor (Tuned)",
     "Approach": "Tuned with BayesSearchCV (params: OrderedDict({'regressor__colsample_bytree': 1.0, 'regressor__learning_rate': 0.012614141235943423, 'regressor__max_depth': 3, 'regressor__min_child_samples': 44, 'regressor__n_estimators': 540, 'regressor__num_leaves': 20, 'regressor__reg_alpha': 0.0, 'regressor__reg_lambda': 0.22975045403226968, 'regressor__subsample': 1.0}))",
     "MAE": 7.8728,
-    "Code": ""
+    "Code": """# Define target and features
+target_col = "DE Theory"
+X = df.drop(columns=[target_col])
+y = df[target_col]
+
+# Remove outliers using IQR
+Q1 = y.quantile(0.25)
+Q3 = y.quantile(0.75)
+IQR = Q3 - Q1
+mask = (y >= Q1 - 1.5 * IQR) & (y <= Q3 + 1.5 * IQR)
+X, y = X[mask], y[mask]
+
+# Identify categorical and numeric columns
+categorical_cols = [
+    "Gender",
+    "Religion",
+    "Branch",
+    "Section-1",
+    "Section-2",
+    "Section-3",
+]
+numeric_cols = [col for col in X.columns if col not in categorical_cols]
+
+# Preprocessing pipeline
+preprocessor = ColumnTransformer(
+    [
+        ("cat", OneHotEncoder(drop="first", handle_unknown="ignore"), categorical_cols),
+        ("num", "passthrough", numeric_cols),
+    ]
+)
+
+# Define base pipeline
+base_pipeline = Pipeline(
+    [
+        ("preprocessor", preprocessor),
+        ("regressor", LGBMRegressor(random_state=42, verbose=-1)),
+    ]
+)
+
+# Define Bayesian parameter space
+param_distributions = {
+    "regressor__num_leaves": Integer(20, 100),
+    "regressor__max_depth": Integer(3, 9),
+    "regressor__learning_rate": Real(0.005, 0.05, prior="log-uniform"),
+    "regressor__n_estimators": Integer(100, 600),
+    "regressor__subsample": Real(0.7, 1.0),
+    "regressor__colsample_bytree": Real(0.7, 1.0),
+    "regressor__reg_alpha": Real(0.0, 0.3),
+    "regressor__reg_lambda": Real(0.0, 0.3),
+    "regressor__min_child_samples": Integer(10, 50),
+}
+
+# Setup 5-Fold CV
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+
+# Run Bayesian search
+search = BayesSearchCV(
+    base_pipeline,
+    search_spaces=param_distributions,
+    n_iter=60,
+    scoring="neg_mean_absolute_error",
+    cv=kf,
+    verbose=1,
+    random_state=42,
+    n_jobs=-1,
+)
+
+# Fit search
+search.fit(X, y)
+best_model = search.best_estimator_
+best_params = search.best_params_
+best_score = -search.best_score_
+
+# Print best results
+print("Model: LightGBM Regressor (Tuned)")
+print("Best Params:", best_params)
+print(f"Best MAE: {best_score:.4f}")"""
   },
+  # Ridge Regression 
   {
     "Model": "Ridge Regression",
     "Approach": "Full-feature regression with 5-Fold CV and Regularization",
