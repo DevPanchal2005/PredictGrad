@@ -129,9 +129,9 @@ with de_tab:
                 pass
         # Display model details
         with st.expander(f"Model: {model_df["Model"].iloc[i]} | Approach: {model_df['Approach'].iloc[i]} | MAE: {model_df['MAE'].iloc[i]}"):
-            st.markdown(f"#### {model_df['Model'].iloc[i]}")
-            st.markdown(f"#### Approach: {model_df['Approach'].iloc[i]}")
-            st.metric("Mean Absolute Error (MAE)", model_df['MAE'].iloc[i])
+            st.markdown(f"#### -> {model_df['Model'].iloc[i]}")
+            st.markdown(f" Approach: {model_df['Approach'].iloc[i]}")
+            st.metric(" Mean Absolute Error (MAE)", model_df['MAE'].iloc[i], border=True, width="content")
             st.code(model_df['Code'].iloc[i], language="python")
 
 with math3_tab:
