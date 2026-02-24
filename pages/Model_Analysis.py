@@ -2,7 +2,7 @@ import streamlit as st
 import os
 from PIL import Image
 
-st.set_page_config(page_title="Model Analysis", page_icon='🔍', layout='centered')
+st.set_page_config(page_title="Model Analysis", page_icon='🔍', layout='wide')
 
 # CSS for custom styling
 st.html("<style> ::selection { color: #7f00ff;} </style>")
@@ -56,7 +56,7 @@ with subject_tab:
     
     subject_code = "de"  # Default to Digital Electronics for initial load
         
-    de_tab, math3_tab, fsd_tab, python_tab = st.tabs(["Digital Electronics (DE)", "Math-3", "Full Stack Development (FSD)", "Python"], width=600)
+    de_tab, math3_tab, fsd_tab, python_tab = st.tabs(["Digital Electronics (DE)", "Math-3", "Full Stack Development (FSD)", "Python"], width=1000)
         
     with de_tab:
         st.markdown("### Digital Electronics (DE) Model Performance")

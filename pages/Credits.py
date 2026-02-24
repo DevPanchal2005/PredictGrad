@@ -1,5 +1,5 @@
 import streamlit as st
-st.set_page_config(page_title="Credits", layout="centered", page_icon='📜')
+st.set_page_config(page_title="Credits", layout="wide", page_icon='📜')
 
 # CSS for custom styling
 st.html("<style> ::selection { color: #FF7300;} </style>")

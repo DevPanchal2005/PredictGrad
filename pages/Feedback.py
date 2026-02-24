@@ -7,7 +7,7 @@ from collections import Counter, deque
 import re
 import numpy as np
 
-st.set_page_config(page_title="Feedback", layout="centered", page_icon='💬')
+st.set_page_config(page_title="Feedback", layout="wide", page_icon='💬')
 
 # CSS for custom styling
 st.html("<style> ::selection { color: #FF7300;} </style>")
