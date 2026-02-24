@@ -13,10 +13,6 @@ with st.container(border=True):
     st.link_button("GitHub Profile", "https://github.com/devpanchal2005", icon="🐙", use_container_width=True)
 
 with st.container(border=True):
-    "## GitHub Repository :"
-    st.link_button("PredictGrad", "https://github.com/devpanchal2005/predictgrad/", icon="🔗")
-
-with st.container(border=True):
     """
     ## 🛠️ Technologies Used
     - 📌 **Programming & Libraries :** Python, Streamlit, NumPy, Pandas, Plotly, Scikit-Learn, SciPy, PIL, Matplotlib, Seaborn, SHAP, LightGBM, CatBoost, XGBoost, StatsModels, Optuna, Boruta
