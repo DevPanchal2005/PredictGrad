@@ -7,6 +7,15 @@ from EDA.SubjectModels.de_model.models_info import models as de_models
 # from EDA.SubjectModels.fsd_model.models_info import models as fsd_models
 # from EDA.SubjectModels.python_model.models_info import models as python_models
 
+st.markdown("""
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    <style>
+        body, .stMarkdown, .stButton button {
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
 st.set_page_config(page_title="Model Selection", page_icon='⚙️', layout='wide')
 
 # CSS for custom styling
