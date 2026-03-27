@@ -13,14 +13,7 @@ import codes.mean_median_mode_analysis as mma
 import codes.iqr_analysis as iqa
 import codes.z_score_analysis as zsa
 
-st.markdown("""
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
-    <style>
-        body, .stMarkdown, .stButton button {
-            font-family: 'JetBrains Mono', monospace !important;
-        }
-    </style>
-    """, unsafe_allow_html=True) 
+ 
 
 # CSS for custom styling
 st.html("<style> ::selection { color: #c9ff00;} </style>")

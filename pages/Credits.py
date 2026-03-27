@@ -1,14 +1,7 @@
 import streamlit as st
 st.set_page_config(page_title="Credits", layout="wide", page_icon='📜')
 
-st.markdown("""
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
-    <style>
-        body, .stMarkdown, .stButton button {
-            font-family: 'JetBrains Mono', monospace !important;
-        }
-    </style>
-    """, unsafe_allow_html=True)
+
 
 # CSS for custom styling
 st.html("<style> ::selection { color: #FF7300;} </style>")
