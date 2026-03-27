@@ -120,7 +120,7 @@ with subject_tab:
         
         for file, caption in subject_images:
             show_image(subject_base_path, file, caption)
-        
+                    
     with python_tab:
         st.markdown("### Python Model Performance")
         subject_code = "python"

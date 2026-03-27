@@ -34,7 +34,7 @@ This project uses a structured dataset of academic records collected from a loca
 **Key Details:**
 
 * **Source:** Digitized and anonymized academic records
-[**File:** `student_performance_dataset.csv`](https://github.com/ShailKPatel/PredictGrad/blob/main/dataset/student_performance_dataset.csv)* 
+[**File:** `student_performance_dataset.csv`](https://github.com/ShailKPatel/PredictGrad/blob/main/dataset/student_performance_dataset.csv)*
 **Total Students:** 905
 * **Features:** 56 columns including demographics, theory and practical marks, and attendance
 * **Semesters:** 1, 2, and 3
@@ -124,7 +124,7 @@ The entire PredictGrad pipeline has been deployed using Streamlit to allow users
 
 **App Link:**
 
-[App Link: Coming Soon]
+[https://thepredictgrad.streamlit.app](https://thepredictgrad.streamlit.app/)
 
 **App Pages:**
 
@@ -247,11 +247,4 @@ The entire PredictGrad pipeline has been deployed using Streamlit to allow users
 ├── reviews/
 │   ├── recent_reviews.json
 │   └── word_count.json
-└── try.csv
-
 ```
----
-
-## Contact
-
-For any questions, collaboration, or feedback:

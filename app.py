@@ -15,7 +15,7 @@ model_analysis = st.Page("pages/Model_Analysis.py", icon='🎯') # For SHAP
 
 feedback = st.Page("pages/Feedback.py", icon='💬') # for feedback
 credits = st.Page("pages/Credits.py", icon='📜') # for Credits
-
+ 
 # Group pages
 pg = st.navigation({
     "Home": [home],
