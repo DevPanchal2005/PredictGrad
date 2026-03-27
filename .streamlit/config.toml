@@ -4,4 +4,4 @@ primaryColor="#ff6ec7"             # Electric pink
 backgroundColor="#0f0f0f"          # Deep black for contrast
 secondaryBackgroundColor="#1f1f3a" # Dark purple-blue for panels
 textColor="#f8f8ff"                # Ghost white for clarity
-font = "'Space Grotesk':https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
+font = "'JetBrains Mono':https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
